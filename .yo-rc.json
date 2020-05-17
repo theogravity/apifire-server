@@ -1,0 +1,9 @@
+{
+  "generator-node": {
+    "promptValues": {
+      "authorName": "Theo Gravity",
+      "authorEmail": "theo@suteki.nu",
+      "authorUrl": ""
+    }
+  }
+}
