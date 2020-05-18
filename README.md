@@ -12,13 +12,15 @@ Uses the following libraries:
 
 See the [`apifire`](https://github.com/theogravity/apifire) for notes on current limitations with using an OpenAPI 3 spec.
 
+The generated project comes with a sample OpenAPI and `objection-generator` spec to quickly get a working server up and running.
+
 ## Installation
 
 First, install [Yeoman](http://yeoman.io) and generator-api-server using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
 
 ```bash
 npm install -g yo
-npm install -g apifire-server
+npm install -g generator-apifire-server
 ```
 
 Then generate your new project:
