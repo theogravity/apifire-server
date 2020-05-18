@@ -55,7 +55,7 @@
     "@types/pino": "^6.0.0",
     "@typescript-eslint/eslint-plugin": "2.31.0",
     "@typescript-eslint/parser": "2.31.0",
-    "apifire": "^0.5.4",
+    "apifire": "^0.5.5",
     "eslint": "7.0.0",
     "jest": "26.0.1",
     "jest-cli": "26.0.1",
