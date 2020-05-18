@@ -1,9 +1,16 @@
 # apifire-server [![NPM version][npm-image]][npm-url]
 > Generates an express API server with routes/controllers/validation/model/migration generation capabilities. 
 
+Uses the following libraries:
+
+- [`objection-generator`](https://github.com/theogravity/objection-generator): Generates Typescript objection.js models and knex migrations
+- [`new-error`](https://github.com/theogravity/new-error): Used to build an error-handling infrastructure
+- [`apifire`](https://github.com/theogravity/apifire): Generates Typescript controllers/routers/validators
+- [`ajv`](https://ajv.js.org/): Validates API request parameters in routers
+
 ## Installation
 
-First, install [Yeoman](http://yeoman.io) and generator-ts-openapi-server using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
+First, install [Yeoman](http://yeoman.io) and generator-api-server using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
 
 ```bash
 npm install -g yo
