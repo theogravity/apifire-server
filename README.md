@@ -1,12 +1,16 @@
 # apifire-server [![NPM version][npm-image]][npm-url]
 > Generates an express API server written in Typescript with routes/controllers/validation/model/migration generation capabilities. 
+> Use an OpenAPI 3 yaml file to generate controllers / routers / validators
+> Use a yaml to generate objection.js models and knex migrations
 
 Uses the following libraries:
 
 - [`objection-generator`](https://github.com/theogravity/objection-generator): Generates Typescript objection.js models and knex migrations
 - [`new-error`](https://github.com/theogravity/new-error): Used to build an error-handling infrastructure
-- [`apifire`](https://github.com/theogravity/apifire): Generates Typescript controllers/routers/validators
+- [`apifire`](https://github.com/theogravity/apifire): Generates Typescript controllers/routers/validators from an OpenAPI 3 spec.
 - [`ajv`](https://ajv.js.org/): Validates API request parameters in routers
+
+See the [`apifire`](https://github.com/theogravity/apifire) for notes on current limitations with using an OpenAPI 3 spec.
 
 ## Installation
 
