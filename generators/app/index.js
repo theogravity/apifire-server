@@ -1,28 +1,32 @@
-'use strict';
-const Generator = require('yeoman-generator');
-const chalk = require('chalk');
-const yosay = require('yosay');
+"use strict";
+const Generator = require("yeoman-generator");
+const chalk = require("chalk");
+const yosay = require("yosay");
 
 module.exports = class extends Generator {
   prompting() {
-    this.answers = {}
+    this.answers = {};
     // Have Yeoman greet the user.
     this.log(
-      yosay(`Welcome to the smashing ${chalk.red('generator-ts-openapi-server')} generator!`)
+      yosay(
+        `Welcome to the smashing ${chalk.red(
+          "generator-ts-openapi-server"
+        )} generator!`
+      )
     );
 
     const prompts = [
       {
-        type: 'input',
-        name: 'projectName',
-        message: 'Package name',
+        type: "input",
+        name: "projectName",
+        message: "Package name",
         default: this.appname
       },
       {
-        type: 'input',
-        name: 'packageDescription',
-        message: 'Package description',
-        default: ''
+        type: "input",
+        name: "packageDescription",
+        message: "Package description",
+        default: ""
       }
     ];
 
@@ -36,21 +40,24 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    this.fs.copy(
-      this.templatePath('**/*'),
-      this.destinationRoot(),
-      { globOptions: { dot: true } }
-    );
+    this.fs.copy(this.templatePath("**/*"), this.destinationRoot(), {
+      globOptions: { dot: true }
+    });
 
     this.fs.copyTpl(
-      this.templatePath('package.json'),
-      this.destinationPath('package.json'),
+      this.templatePath("package.json"),
+      this.destinationPath("package.json"),
       this.answers
     );
 
+    this.fs.move(
+      this.destinationPath("__.npmignore"),
+      this.destinationPath(".npmignore")
+    );
+
     this.fs.copyTpl(
-      this.templatePath('README.md'),
-      this.destinationPath('README.md'),
+      this.templatePath("README.md"),
+      this.destinationPath("README.md"),
       this.answers
     );
   }
@@ -64,7 +71,7 @@ module.exports = class extends Generator {
   }
 
   end() {
-    this.log('All done!')
-    this.log(`Run 'npm run generate:all' to initiate the scaffolding`)
+    this.log("All done!");
+    this.log(`Run 'npm run generate:all' to initiate the scaffolding`);
   }
 };
