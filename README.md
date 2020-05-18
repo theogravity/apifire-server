@@ -1,5 +1,5 @@
 # apifire-server [![NPM version][npm-image]][npm-url]
-> Generates an express API server with routes/controllers/validation/model/migration generation capabilities. 
+> Generates an express API server written in Typescript with routes/controllers/validation/model/migration generation capabilities. 
 
 Uses the following libraries:
 
