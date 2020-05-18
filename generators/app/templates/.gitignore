@@ -67,3 +67,6 @@ lib/
 build/
 coverage/
 controllers-generated/
+generated/
+
+sample.db

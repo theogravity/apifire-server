@@ -1,0 +1,40 @@
+config:
+  model:
+    # Adds a prefix to the class names of the generated objection.js models
+    classNamePrefix:
+    # Adds a postfix to the class names of the generated objection.js models
+    classNamePostfix: Model
+
+# Objection models to generate
+models:
+  # Defines an objection model named Person (actually PersonModel with the postfix)
+  Pet:
+    # database table name
+    tableName: pets
+    # maps to Model#jsonSchema()
+    # https://json-schema.org/understanding-json-schema/reference/type.html
+    # https://vincit.github.io/objection.js/guide/models.html#examples
+    jsonSchema:
+      required: ['name', 'tag']
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        tag:
+          # You can define a re-usable set of properties and reference them via $ref
+          $ref: '#/components/fieldProperties/tag'
+        created:
+          type: string
+          format: date-time
+
+# components are re-usable elements that can be
+# referenced in the model via $ref
+components:
+  # This is a made up section used for
+  # defining common field properties
+  fieldProperties:
+    tag:
+      type: string

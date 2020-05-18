@@ -17,6 +17,12 @@ module.exports = class extends Generator {
         name: 'projectName',
         message: 'Package name',
         default: this.appname
+      },
+      {
+        type: 'input',
+        name: 'packageDescription',
+        message: 'Package description',
+        default: ''
       }
     ];
 
@@ -39,7 +45,13 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('package.json'),
       this.destinationPath('package.json'),
-      { projectName: this.answers.projectName }
+      this.answers
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('README.md'),
+      this.destinationPath('README.md'),
+      this.answers
     );
   }
 
@@ -49,5 +61,10 @@ module.exports = class extends Generator {
       bower: false,
       yarn: false
     });
+  }
+
+  end() {
+    this.log('All done!')
+    this.log(`Run 'npm run generate:all' to initiate the scaffolding`)
   }
 };

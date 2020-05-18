@@ -4,8 +4,6 @@ info:
   title: Swagger Petstore
   license:
     name: MIT
-servers:
-  - url: http://petstore.swagger.io/v1
 paths:
   /pets:
     get:
@@ -33,12 +31,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Pets"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
     post:
       summary: Create a pet
       operationId: createPets
@@ -47,12 +39,6 @@ paths:
       responses:
         '201':
           description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
   /pets/{petId}:
     get:
       summary: Info for a specific pet
@@ -73,12 +59,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Pets"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+
 components:
   schemas:
     Pet:
@@ -87,8 +68,7 @@ components:
         - name
       properties:
         id:
-          type: integer
-          format: int64
+          type: string
         name:
           type: string
         tag:
@@ -97,13 +77,3 @@ components:
       type: array
       items:
         $ref: "#/components/schemas/Pet"
-    Error:
-      required:
-        - code
-        - message
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string

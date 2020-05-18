@@ -18,7 +18,7 @@ export class StructuredLogger implements ILogger {
     return this
   }
 
-  getInstance() {
+  getInstance () {
     return this.logger
   }
 
@@ -35,10 +35,11 @@ export class StructuredLogger implements ILogger {
 
     this.logger.info({
       ...this.data,
-      ...data
+      ...msg
     })
   }
-  error (msg: string | Record<string, any>, data?: Record<string, any>) {
+
+  error (msg: string | Record<string, any>, data: Record<string, any> = {}) {
     if (typeof msg === 'string') {
       return this.logger.error({
         msg,
@@ -51,11 +52,11 @@ export class StructuredLogger implements ILogger {
 
     this.logger.error({
       ...this.data,
-      ...data
+      ...msg
     })
   }
 
-  warn (msg: string | Record<string, any>, data?: Record<string, any>) {
+  warn (msg: string | Record<string, any>, data: Record<string, any> = {}) {
     if (typeof msg === 'string') {
       return this.logger.warn({
         msg,
@@ -68,11 +69,11 @@ export class StructuredLogger implements ILogger {
 
     this.logger.warn({
       ...this.data,
-      ...data
+      ...msg
     })
   }
 
-  debug (msg: string | Record<string, any>, data?: Record<string, any>) {
+  debug (msg: string | Record<string, any>, data: Record<string, any> = {}) {
     if (typeof msg === 'string') {
       return this.logger.debug({
         msg,
@@ -85,17 +86,17 @@ export class StructuredLogger implements ILogger {
 
     this.logger.debug({
       ...this.data,
-      ...data
+      ...msg
     })
   }
 
-  fatal (msg: string | Record<string, any>, data?: Record<string, any>) {
+  fatal (msg: string | Record<string, any>, data: Record<string, any> = {}) {
     if (typeof msg === 'string') {
       return this.logger.fatal({
         msg,
         data: {
           ...this.data,
-          ...data
+          ...msg
         }
       })
     }
@@ -106,7 +107,7 @@ export class StructuredLogger implements ILogger {
     })
   }
 
-  trace (msg: string | Record<string, any>, data?: Record<string, any>) {
+  trace (msg: string | Record<string, any>, data: Record<string, any> = {}) {
     if (typeof msg === 'string') {
       return this.logger.trace({
         msg,
@@ -119,7 +120,7 @@ export class StructuredLogger implements ILogger {
 
     this.logger.trace({
       ...this.data,
-      ...data
+      ...msg
     })
   }
 }

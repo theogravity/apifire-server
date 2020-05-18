@@ -1,8 +1,7 @@
 {
   "name": "<%= projectName %>",
-  "private": true,
   "version": "1.0.0",
-  "description": "My personal boilerplate for new projects using typescript",
+  "description": "<%= packageDescription %>",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
@@ -26,27 +25,26 @@
     "changelog:release": "changelog-version release",
     "lint": "prettier-standard src/**/*.ts && standard src/**/*.ts",
     "ts-node-dev": "ts-node-dev",
-    "generate:server": "og openapi.yaml api-server",
+    "generate:all": "npm run generate:server && npm run generate:models && npm run generate:migration && npm run generate:all:copy",
+    "generate:all:copy": "rm generated/migrate.js && cp -nR generated/ src/db/ && cp -nR src/controllers-generated/ src/controllers",
+    "generate:models": "objection-generator generate database.yaml generated",
+    "generate:migration": "objection-generator knex database.yaml generated",
+    "generate:server": "apifire openapi.yaml api-server",
+    "db:migrate": "ts-node-dev migrate-db.ts",
     "start:dev": "ts-node-dev src"
+
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/theogravity/boilerplate.git"
-  },
-  "author": "Theo Gravity <theo@suteki.nu>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/theogravity/boilerplate/issues"
-  },
-  "homepage": "https://github.com/theogravity/boilerplate#readme",
   "dependencies": {
     "ajv": "^6.12.2",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
+    "knex": "^0.21.1",
     "nanoid": "^3.1.6",
     "new-error": "^1.0.11",
+    "objection": "^2.1.3",
     "pino": "^6.2.1",
-    "ts-log": "^2.1.4"
+    "sqlite3": "^4.2.0"
   },
   "devDependencies": {
     "@theo.gravity/changelog-version": "2.1.10",
@@ -57,11 +55,13 @@
     "@types/pino": "^6.0.0",
     "@typescript-eslint/eslint-plugin": "2.31.0",
     "@typescript-eslint/parser": "2.31.0",
+    "apifire": "^0.5.4",
     "eslint": "7.0.0",
     "jest": "26.0.1",
     "jest-cli": "26.0.1",
     "jest-junit-reporter": "1.1.0",
     "lint-staged": "10.2.2",
+    "objection-generator": "^1.1.5",
     "pre-commit": "1.2.2",
     "prettier-standard": "^16.3.0",
     "standard": "14.3.3",

@@ -1,4 +1,4 @@
-import { RequestContext } from '../core/request-context'
+import { RequestContext } from '../utils/request-context'
 import { IRequest } from '../interfaces'
 
 export function requestContextMiddleware () {

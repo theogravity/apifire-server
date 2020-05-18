@@ -1,12 +1,11 @@
 import { BaseError } from 'new-error'
-import { getErrRegistry } from '../core/errors'
+import { getErrRegistry } from '../utils/errors'
 import { IRequest } from '../interfaces'
-import { getErrorId } from '../core/id'
+import { getErrorId } from '../utils/id'
 
 export function handleErrorMiddleware() {
   return (err, req: IRequest, res, next) => {
     const errs = getErrRegistry()
-
     if (err && err instanceof BaseError) {
       err.withErrorId(getErrorId())
 
@@ -15,10 +14,7 @@ export function handleErrorMiddleware() {
           // don't really care
           break
         default:
-          req.context.logger.error({
-            reqId: req.context.getReqId(),
-            err: err.toJSON()
-          })
+          req.context.logger.error(err.toJSON())
       }
 
       res.status(err.getStatusCode() ?? 500)
@@ -27,11 +23,18 @@ export function handleErrorMiddleware() {
         err: err.toJSONSafe()
       })
     } else if (err) {
+      const newErr = errs.newError('INTERNAL_SERVER_ERROR', 'UNCATEGORIZED')
+        .withErrorId(err.errId)
+
       res.status(500)
+
+      req.context.logger.error({
+        err
+      })
+
       return res.json({
-        err: errs.newError('INTERNAL_SERVER_ERROR', 'UNCATEGORIZED')
-          .causedBy(err)
-          .toJSONSafe()
+        reqId: req.context.getReqId(),
+        err: newErr.toJSONSafe()
       })
     }
 

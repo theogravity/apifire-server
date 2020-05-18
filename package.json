@@ -1,8 +1,8 @@
 {
-  "name": "generator-ts-openapi-server",
-  "version": "0.0.0",
-  "description": "OpenAPI express server generator",
-  "homepage": "",
+  "name": "generator-apifire-server",
+  "version": "0.1.0",
+  "description": "Generates an express server complete with validation, error handling, and logging written in Typescript",
+  "homepage": "https://github.com/theogravity/apifire-server",
   "author": {
     "name": "Theo Gravity",
     "email": "theo@suteki.nu",
@@ -11,9 +11,15 @@
   "files": [
     "generators"
   ],
+  "bugs": {
+    "url": "https://github.com/theogravity/apifire-server/issues"
+  },
   "main": "generators/index.js",
   "keywords": [
-    "",
+    "openapi",
+    "api",
+    "typescript",
+    "express",
     "yeoman-generator"
   ],
   "devDependencies": {
@@ -74,6 +80,6 @@
     "pretest": "eslint .",
     "test": "jest"
   },
-  "repository": "theogravity/generator-ts-openapi-server",
+  "repository": "theogravity/apifire-server",
   "license": "MIT"
 }

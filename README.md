@@ -1,5 +1,5 @@
-# generator-ts-openapi-server [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
-> OpenAPI express server generator
+# apifire-server [![NPM version][npm-image]][npm-url]
+> Generates an express API server with routes/controllers/validation/model/migration generation capabilities. 
 
 ## Installation
 
@@ -7,13 +7,13 @@ First, install [Yeoman](http://yeoman.io) and generator-ts-openapi-server using 
 
 ```bash
 npm install -g yo
-npm install -g generator-ts-openapi-server
+npm install -g apifire-server
 ```
 
 Then generate your new project:
 
 ```bash
-yo ts-openapi-server
+yo apifire-server
 ```
 
 ## Getting To Know Yeoman
@@ -25,7 +25,7 @@ yo ts-openapi-server
 
 ## License
 
-MIT © [Theo Gravity]()
+MIT © [Theo Gravity](https://github.com/theogravity)
 
 
 [npm-image]: https://badge.fury.io/js/generator-ts-openapi-server.svg
