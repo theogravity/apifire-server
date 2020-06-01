@@ -1,32 +1,26 @@
 import { resolve } from 'path'
+import { loadStaticConfig, ICerebroConfig } from 'configurity'
 
-let config : any = {}
+let config: ICerebroConfig = null
 
 export async function initConfig () {
-  config = {
-    // config for this service
-    service: {
-      port: 3000
-    },
-    // knex configuration
-    db: {
-      client: 'sqlite3',
-      connection: {
-        filename: resolve(process.cwd(), 'sample.db')
-      },
-      migrations: {
-        tableName: 'knex_migrations',
-        directory: resolve(__dirname, '..', 'db', 'migrations')
-      },
-      timezone: 'UTC'
-    }
-  }
+  config = loadStaticConfig(resolve(__dirname, 'config.yaml'))
+}
+
+export function getConfig (): ICerebroConfig {
+  return config
 }
 
 export function getDbConfig () {
-  return config.db
-}
-
-export function getConfig() : any {
-  return config
+  return {
+    client: config.getAssertValue('db_client'),
+    connection: {
+      filename: resolve(process.cwd(), config.getAssertValue('db_file'))
+    },
+    migrations: {
+      tableName: 'knex_migrations',
+      directory: resolve(__dirname, '..', 'db', 'migrations')
+    },
+    timezone: 'UTC'
+  }
 }

@@ -8,7 +8,10 @@ import { initApp } from './app'
   const config = getConfig()
   const app = express()
   await initApp(app)
-  http.createServer(app).listen(config.service.port, () => {
-    console.log(`API server started on port ${config.service.port}`)
+
+  const port = config.getAssertValue('service_port')
+
+  http.createServer(app).listen(port, () => {
+    console.log(`API server started on port ${port}`)
   })
 })()

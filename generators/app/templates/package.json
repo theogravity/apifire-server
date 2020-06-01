@@ -26,7 +26,7 @@
     "lint": "prettier-standard src/**/*.ts && standard src/**/*.ts",
     "ts-node-dev": "ts-node-dev",
     "generate:all": "npm run generate:server && npm run generate:models && npm run generate:migration && npm run generate:all:copy && npm run db:migrate",
-    "generate:all:copy": "rm -r generated/migrate.js && cp -nR generated/ src/db/ && cp -nR src/controllers-generated/ src/controllers",
+    "generate:all:copy": "rm -rf generated/migrate.js && cp -nR generated/ src/db/ || true && cp -nR src/controllers-generated/ src/controllers || true",
     "generate:models": "objection-generator generate database.yaml generated",
     "generate:migration": "objection-generator knex database.yaml generated",
     "generate:server": "apifire openapi.yaml api-server",
@@ -37,6 +37,7 @@
   "dependencies": {
     "ajv": "^6.12.2",
     "body-parser": "^1.19.0",
+    "configurity": "^2.0.2",
     "express": "^4.17.1",
     "knex": "^0.21.1",
     "nanoid": "^3.1.9",

@@ -6,14 +6,16 @@ import { getErrorId } from '../utils/id'
 export function handleErrorMiddleware() {
   return (err, req: IRequest, res, next) => {
     const errs = getErrRegistry()
+
     if (err && err instanceof BaseError) {
       err.withErrorId(getErrorId())
 
       switch (err.getErrorType()) {
         case 'INVALID_REQ_PARAMS':
-          // don't really care
+          // don't really care, don't log
           break
         default:
+          // log the error for internal purposes
           req.context.logger.error(err.toJSON())
       }
 

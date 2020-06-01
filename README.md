@@ -10,6 +10,7 @@
 
 Uses the following libraries:
 
+- [`configurity`](https://github.com/theogravity/configurity): Handles configuration
 - [`objection-generator`](https://github.com/theogravity/objection-generator): Generates Typescript objection.js models and knex migrations
 - [`new-error`](https://github.com/theogravity/new-error): Used to build an error-handling infrastructure
 - [`apifire`](https://github.com/theogravity/apifire): Generates Typescript controllers/routers/validators from an OpenAPI 3 spec.

@@ -1,0 +1,11 @@
+# For more information about this file, see:
+# https://github.com/theogravity/configurity
+
+- setting: service_port
+  value: 3000
+
+- setting: db_client
+  value: sqlite3
+
+- setting: db_file
+  value: sample.db
