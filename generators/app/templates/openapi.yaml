@@ -41,6 +41,9 @@ paths:
           description: Null response
   /pets/{petId}:
     get:
+      security:
+        # only the first array item is recognized for security defs
+        - AuthProtection: [scope]
       summary: Info for a specific pet
       operationId: showPetById
       tags:
@@ -61,6 +64,10 @@ paths:
                 $ref: "#/components/schemas/Pets"
 
 components:
+  securitySchemes:
+    AuthProtection:
+      type: openIdConnect
+      openIdConnectUrl: https://example.com/.well-known/openid-configuration
   schemas:
     Pet:
       required:

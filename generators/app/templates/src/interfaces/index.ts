@@ -33,3 +33,10 @@ export interface ILogger {
   trace (data: Record<string, any> | string)
   trace (msg: string, data: Record<string, any>)
 }
+
+export interface IProtectEndpointParams {
+  /**
+   * An array of auth scopes that are required to access the endpoint
+   */
+  scopes?: Array<string>
+}
