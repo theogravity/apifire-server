@@ -49,6 +49,11 @@ module.exports = class extends Generator {
       }
     );
 
+    this.fs.copy(
+      this.templatePath("docker/dev/.bash_profile"),
+      this.destinationPath("docker/dev/.bash_profile")
+    );
+
     this.fs.copy(this.templatePath(".*"), this.destinationRoot());
   }
 
