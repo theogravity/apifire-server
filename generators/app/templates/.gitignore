@@ -65,6 +65,7 @@ test-report.xml
 lib/
 
 build/
+dist/
 coverage/
 controllers-generated/
 generated/

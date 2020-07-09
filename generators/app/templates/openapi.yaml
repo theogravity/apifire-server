@@ -1,86 +1,738 @@
-openapi: "3.0.0"
+openapi: 3.0.0
 info:
-  version: 1.0.0
-  title: Swagger Petstore
-  license:
-    name: MIT
+  title: Boxed Thoughts API
+  version: '1.0'
+  description: ''
+  contact:
+    name: Theo Gravity
+    email: theo@suteki.nu
+servers:
+  - url: 'https://api.boxedthoughts.com/v1'
 paths:
-  /pets:
-    get:
-      summary: List all pets
-      operationId: listPets
-      tags:
-        - pets
-      parameters:
-        - name: limit
-          in: query
-          description: How many items to return at one time (max 100)
-          required: false
-          schema:
-            type: integer
-            format: int32
+  /account/register:
+    post:
+      summary: Your POST endpoint
+      tags: []
       responses:
         '200':
-          description: An paged array of pets
-          headers:
-            x-next:
-              description: A link to the next page of responses
-              schema:
-                type: string
+          description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Pets"
-    post:
-      summary: Create a pet
-      operationId: createPets
-      tags:
-        - pets
-      responses:
-        '201':
-          description: Null response
-  /pets/{petId}:
+                type: object
+                properties:
+                  accountId:
+                    type: string
+                  personaId:
+                    type: string
+                required:
+                  - accountId
+                  - personaId
+      operationId: createAccount
+      description: Creates an account.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                oauthId:
+                  type: string
+                  description: OAuth account id
+                username:
+                  type: string
+                  pattern: '^[A-Za-z0-9_]+'
+                  minLength: 1
+                  maxLength: 15
+              required:
+                - oauthId
+                - username
+        description: ''
+    parameters: []
+  '/account/{pAccountId}/personas':
+    parameters:
+      - schema:
+          type: string
+        name: pAccountId
+        in: path
+        required: true
+        description: Account id in path
     get:
       security:
-        # only the first array item is recognized for security defs
-        - AuthProtection: [scope]
-      summary: Info for a specific pet
-      operationId: showPetById
-      tags:
-        - pets
-      parameters:
-        - name: petId
-          in: path
-          required: true
-          description: The id of the pet to retrieve
-          schema:
-            type: string
+        - FirebaseJwt: []
+      summary: Your GET endpoint
+      tags: []
       responses:
         '200':
-          description: Expected response to a valid request
+          description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Pets"
-
+                type: object
+                properties:
+                  personas:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Persona'
+      operationId: getAccountPersonas
+      description: Gets the personas associated with the account
+  '/account/{pAccountId}':
+    get:
+      summary: Your GET endpoint
+      tags: []
+      security:
+        - FirebaseJwt: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  account:
+                    $ref: '#/components/schemas/Account'
+      operationId: getAccountInfo
+      description: Get account info
+      parameters: []
+    parameters:
+      - schema:
+          type: string
+        name: pAccountId
+        in: path
+        required: true
+        description: Account id in path
+  /persona/usernameExists:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  exists:
+                    type: boolean
+                required:
+                  - exists
+      operationId: checkPersonaUsernameExists
+      description: Check if a persona username exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  minLength: 1
+                  maxLength: 15
+                  pattern: '^[A-Za-z0-9_]+'
+              required:
+                - username
+  '/persona/{pPersonaId}/friends':
+    patch:
+      summary: ''
+      operationId: addFriend
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  friends:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Friend'
+      description: Adds a friend
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fPersonaId:
+                  type: string
+                  format: uuid
+                  description: Persona id to friend
+              required:
+                - fPersonaId
+    delete:
+      summary: ''
+      operationId: deleteFriend
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  friends:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Friend'
+      description: Removes a friend
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fPersonaId:
+                  type: string
+                  format: uuid
+                  description: Persona id to unfriend
+              required:
+                - fPersonaId
+    parameters:
+      - schema:
+          type: string
+        name: pPersonaId
+        in: path
+        required: true
+    get:
+      summary: ''
+      operationId: getFriendsList
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  friends:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Friend'
+      description: Gets the list of friends
+  '/persona/{pPersonaId}/blocked':
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  blocked:
+                    type: array
+                    description: An array of blocked personas
+                    items:
+                      $ref: '#/components/schemas/BlockedPersona'
+      operationId: getBlockedPersonas
+      description: "Gets the user's blocked list of personas"
+    parameters:
+      - schema:
+          type: string
+        name: pPersonaId
+        in: path
+        required: true
+        description: Persona id in path
+    patch:
+      summary: ''
+      operationId: addBlockedPersona
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  blocked:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BlockedPersona'
+      description: Adds a persona to the block list
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bPersonaId:
+                  type: string
+                  format: uuid
+                  description: Persona id to block
+              required:
+                - bPersonaId
+        description: ''
+    delete:
+      summary: ''
+      operationId: removeBlockedPersona
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  blocked:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BlockedPersona'
+      description: Removes a persona from the block list
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bPersonaId:
+                  type: string
+                  format: uuid
+                  description: Persona id to delete
+              required:
+                - bPersonaId
+  '/persona/{pPersonaId}':
+    get:
+      summary: Your GET endpoint
+      tags: []
+      operationId: getPersona
+      description: Get a persona
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  persona:
+                    $ref: '#/components/schemas/Persona'
+    patch:
+      summary: ''
+      operationId: updatePersona
+      responses:
+        '200':
+          description: OK
+      description: Updates persona details
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                about:
+                  type: string
+    parameters:
+      - schema:
+          type: string
+        name: pPersonaId
+        in: path
+        required: true
+        description: Persona id in path
+  '/thoughts/{pThoughtId}/comments':
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  comments:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ThoughtComment'
+      operationId: getThoughtComments
+      description: Get thought comments
+    parameters:
+      - schema:
+          type: string
+        name: pThoughtId
+        in: path
+        required: true
+        description: Thought id in path
+    post:
+      summary: ''
+      operationId: addThoughtComment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Thought id
+      description: Add a comment to a thought
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                personaId:
+                  type: string
+                comment:
+                  type: string
+  '/thoughts/{pThoughtId}':
+    parameters:
+      - schema:
+          type: string
+        name: pThoughtId
+        in: path
+        required: true
+        description: Thought id in path
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  thought:
+                    $ref: '#/components/schemas/Thought'
+      operationId: getThoughtById
+      description: Get a thought by id
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: after
+    patch:
+      summary: ''
+      operationId: updateThought
+      responses:
+        '200':
+          description: OK
+      description: Updates a thought
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                visibility:
+                  type: string
+  /thoughts:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  thoughts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Thought'
+      operationId: getThoughts
+      description: Get the thoughtstream
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: after
+    post:
+      summary: ''
+      operationId: createThought
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  personaId:
+                    type: string
+                    format: uuid
+                  id:
+                    type: string
+                    format: uuid
+                    description: Thought id
+      description: Create a thought
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                personaId:
+                  type: string
+                  format: uuid
+                content:
+                  type: string
+                  description: The thought content
+                options:
+                  description: Content type options in JSON
+                  type: object
+                type:
+                  type: string
+                  enum:
+                    - bt-code
+                  description: The thought content type
+                visibilityType:
+                  type: string
+                  enum:
+                    - public
+                    - friends
+                    - self
+                  description: To whom the thought should be shown
+              required:
+                - personaId
+                - content
+                - type
+                - visibilityType
+        description: ''
+  /persona:
+    post:
+      summary: ''
+      operationId: createPersona
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: Persona id
+                required:
+                  - id
+      description: Creates a new persona
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accountId:
+                  type: string
+                  format: uuid
+                username:
+                  type: string
+                  pattern: '^[A-Za-z0-9_]+'
+                  minLength: 1
+                  maxLength: 15
+              required:
+                - accountId
+                - username
 components:
   securitySchemes:
-    AuthProtection:
+    FirebaseJwt:
       type: openIdConnect
-      openIdConnectUrl: https://example.com/.well-known/openid-configuration
+      openIdConnectUrl: 'https://example.com/.well-known/openid-configuration'
   schemas:
-    Pet:
-      required:
-        - id
-        - name
+    Thought:
+      title: Thought
+      type: object
+      description: A Thought
+      x-examples: {}
       properties:
         id:
           type: string
-        name:
+          format: uuid
+        accountId:
           type: string
-        tag:
+          format: uuid
+        personaId:
           type: string
-    Pets:
-      type: array
-      items:
-        $ref: "#/components/schemas/Pet"
+          format: uuid
+        username:
+          type: string
+          pattern: '^[A-Za-z0-9_]+'
+          minLength: 1
+          maxLength: 15
+        rawContent:
+          type: string
+          description: The original thought content
+        metadata:
+          type: object
+          description: Metadata that describes the nature of the content
+        commentCount:
+          type: number
+          default: 0
+          description: Number of comments made for the thought
+        visibilityType:
+          type: string
+          default: public
+          enum:
+            - public
+            - friends
+            - self
+            - deleted
+          description: To whom the thought should be shown
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+      required:
+        - id
+        - accountId
+        - personaId
+        - rawContent
+        - metadata
+        - visibilityType
+    Account:
+      title: Account
+      type: object
+      description: An account that holds personas
+      properties:
+        id:
+          type: string
+          description: Account id
+          format: uuid
+        lastLoginTime:
+          type: string
+          format: date-time
+        personaCount:
+          type: number
+          default: 0
+        disabled:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+      required:
+        - id
+    Persona:
+      title: Persona
+      type: object
+      description: A user that is able to post thoughts
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+          pattern: '^[A-Za-z0-9_]+'
+          minLength: 1
+          maxLength: 15
+        about:
+          type: string
+          description: User profile blurb
+        lastCommentTime:
+          type: string
+          format: date-time
+        lastPostTime:
+          type: string
+          format: date-time
+        thoughtCount:
+          type: number
+          default: 0
+        disabled:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+      required:
+        - id
+        - username
+        - lastPostTime
+    ThoughtComment:
+      title: ThoughtComment
+      type: object
+      description: A comment on a thought
+      properties:
+        id:
+          type: string
+          format: uuid
+        thoughtId:
+          type: string
+          format: uuid
+        personaId:
+          type: string
+          format: uuid
+        username:
+          type: string
+          minLength: 1
+          maxLength: 15
+          pattern: '^[A-Za-z0-9_]+'
+        comment:
+          type: string
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+      required:
+        - thoughtId
+        - personaId
+        - username
+        - comment
+    BlockedPersona:
+      title: BlockedPersona
+      type: object
+      description: A blocked persona
+      properties:
+        personaId:
+          type: string
+          format: uuid
+        username:
+          type: string
+          pattern: '^[A-Za-z0-9_]+'
+          minLength: 1
+          maxLength: 15
+      required:
+        - personaId
+        - username
+    AccountOAuth:
+      title: AccountOAuth
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        accountId:
+          type: string
+          format: uuid
+        oauthProvider:
+          type: string
+        oauthId:
+          type: string
+      description: List of linked oauth accounts
+    Friend:
+      title: Friend
+      type: object
+      description: ''
+      properties:
+        personaId:
+          type: string
+          format: uuid
+        username:
+          type: string
+          pattern: '^[A-Za-z0-9_]+'
+          minLength: 1
+          maxLength: 15
+      required:
+        - personaId
+        - username

@@ -1,6 +1,6 @@
 {
   "name": "generator-apifire-server",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Generates an express server complete with validation, error handling, and logging written in Typescript",
   "homepage": "https://github.com/theogravity/apifire-server",
   "author": {

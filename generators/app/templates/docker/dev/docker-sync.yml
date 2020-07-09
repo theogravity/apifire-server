@@ -1,0 +1,7 @@
+version: "2"
+syncs:
+  <%= projectName %>-fs:
+    notify_terminal: false
+    src: './'
+    sync_excludes: ['.git', '.idea', 'node_modules', 'build', 'dist']
+    monit_enable: true

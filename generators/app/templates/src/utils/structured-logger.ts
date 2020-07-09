@@ -96,7 +96,7 @@ export class StructuredLogger implements ILogger {
         msg,
         data: {
           ...this.data,
-          ...msg
+          ...data
         }
       })
     }

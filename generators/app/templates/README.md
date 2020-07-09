@@ -110,3 +110,7 @@ Run the migrations to create the database scaffolding.
 # Start the server
 
 `$ npm run start:dev`
+
+# Run in docker
+
+If you want to run the service in docker, do `./run-docker.sh` and follow the instructions.
