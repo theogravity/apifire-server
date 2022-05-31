@@ -36,6 +36,7 @@
   "license": "MIT",
   "dependencies": {
     "ajv": "^8.11.0",
+    "ajv-formats": "^2.1.1",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
     "configurity": "^2.0.3",
@@ -63,6 +64,7 @@
     "jest-cli": "^28.1.0",
     "jest-junit-reporter": "^1.1.0",
     "lint-staged": "^12.4.3",
+    "loglayer": "^1.0.2",
     "objection-generator": "^1.2.7",
     "pre-commit": "1.2.2",
     "prettier-standard": "^16.4.1",

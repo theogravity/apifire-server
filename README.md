@@ -15,6 +15,7 @@ Uses the following libraries:
 - [`new-error`](https://github.com/theogravity/new-error): Used to build an error-handling infrastructure
 - [`apifire`](https://github.com/theogravity/apifire): Generates Typescript controllers/routers/validators from an OpenAPI 3 spec.
 - [`ajv`](https://ajv.js.org/): Validates API request parameters in routers
+- [`loglayer`](https://github.com/theogravity/loglayer): Structured logging
 
 See the [`apifire`](https://github.com/theogravity/apifire) for notes on current limitations with using an OpenAPI 3 spec.
 

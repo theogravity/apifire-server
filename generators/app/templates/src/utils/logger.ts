@@ -1,7 +1,15 @@
-import { StructuredLogger } from './structured-logger'
+import pino, { P } from 'pino'
+import { LogLayer, LoggerType } from 'loglayer'
 
-const logger = require('pino')()
+const p = pino({
+  level: 'trace',
+});
 
-export function getLogger () {
-  return new StructuredLogger(logger)
+export function getLogger() {
+  return new LogLayer<P.Logger>({
+    logger: {
+      instance: p,
+      type: LoggerType.PINO,
+    },
+  })
 }
