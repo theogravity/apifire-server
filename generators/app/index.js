@@ -57,14 +57,6 @@ module.exports = class extends Generator {
     this.fs.copy(this.templatePath(".*"), this.destinationRoot());
   }
 
-  install() {
-    this.installDependencies({
-      npm: true,
-      bower: false,
-      yarn: false,
-    });
-  }
-
   end() {
     this.log("All done!");
     this.log(`Run 'npm run generate:all' to initiate the scaffolding`);

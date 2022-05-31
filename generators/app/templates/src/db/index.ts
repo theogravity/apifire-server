@@ -1,9 +1,9 @@
-import knex from 'knex'
+import { knex, Knex } from 'knex'
 import { getDbConfig } from '../config'
 
-let db : knex = null
+let db : Knex = null
 
-export function getDb () : knex {
+export function getDb () : Knex {
   if (!db) {
     const config = getDbConfig()
     db = knex(config)

@@ -1,6 +1,6 @@
 {
   "name": "generator-apifire-server",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "description": "Generates an express server complete with validation, error handling, and logging written in Typescript",
   "homepage": "https://github.com/theogravity/apifire-server",
   "author": {
@@ -25,23 +25,23 @@
     "objection"
   ],
   "devDependencies": {
-    "yeoman-test": "^2.6.0",
+    "yeoman-test": "^6.3.0",
     "yeoman-assert": "^3.1.1",
-    "eslint": "^7.1.0",
-    "prettier": "^2.0.5",
-    "husky": "^4.2.5",
-    "lint-staged": "^10.2.6",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-prettier": "^3.1.3",
-    "eslint-config-xo": "^0.29.1",
-    "jest": "^26.0.1"
+    "eslint": "^8.16.0",
+    "prettier": "^2.6.2",
+    "husky": "^8.0.1",
+    "lint-staged": "^12.4.3",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-config-xo": "^0.41.0",
+    "jest": "^28.1.0"
   },
   "engines": {
     "npm": ">= 4.0.0"
   },
   "dependencies": {
-    "chalk": "^4.0.0",
-    "yeoman-generator": "^4.10.1",
+    "chalk": "^4.1.2",
+    "yeoman-generator": "^5.6.1",
     "yosay": "^2.0.2"
   },
   "jest": {
