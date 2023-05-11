@@ -1,12 +1,13 @@
 import { Request, Response } from 'express'
+import { LogLayer } from 'loglayer';
 
 export interface IRequestContext {
   reqId: string
-  logger: ILogger
-  req: Request
-  getLogger(): ILogger
+  logger: LogLayer
+  req: IRequest
+  res: IResponse
+  getLogger(): LogLayer
   getReqId(): string
-  getReq(): Request
 }
 export interface IRequest extends Request {
   context: IRequestContext

@@ -1,10 +1,10 @@
 import { BaseError } from 'new-error'
 import { getErrRegistry } from '../utils/errors'
-import { IRequest } from '../interfaces'
+import { IRequest, IResponse } from '../interfaces';
 import { getErrorId } from '../utils/id'
 
 export function handleErrorMiddleware() {
-  return (err, req: IRequest, res, next) => {
+  return (err, req: IRequest, res: IResponse, next) => {
     const errs = getErrRegistry()
 
     if (err && err instanceof BaseError) {

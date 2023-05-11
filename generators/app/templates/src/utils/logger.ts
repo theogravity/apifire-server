@@ -1,5 +1,5 @@
-import pino, { P } from 'pino'
-import { LogLayer, LoggerType } from 'loglayer'
+import pino, { P } from 'pino';
+import { LogLayer, LoggerType } from 'loglayer';
 
 const p = pino({
   level: 'trace',
@@ -11,5 +11,5 @@ export function getLogger() {
       instance: p,
       type: LoggerType.PINO,
     },
-  })
+  });
 }

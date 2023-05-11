@@ -1,28 +1,23 @@
 import { Request } from 'express'
 import { LogLayer } from 'loglayer'
-import { IRequestContext } from '../interfaces'
+import { IRequest, IRequestContext, IResponse } from "../interfaces";
 import { getLogger } from './logger'
 import { getReqId } from './id'
 
 export class RequestContext implements IRequestContext {
   reqId: string
   logger: LogLayer
-  req: Request
+  req: IRequest
+  res: IResponse
 
-  constructor (req: Request) {
+  constructor (req: IRequest, res: IResponse) {
     this.reqId = getReqId()
     this.logger = getLogger().withContext({
       reqId: this.reqId
     })
 
     this.req = req
-  }
-
-  /**
-   * Get the req object
-   */
-  getReq () {
-    return this.req
+    this.res = res
   }
 
   getLogger () {
